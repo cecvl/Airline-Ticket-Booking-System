@@ -1,0 +1,37 @@
+provide 4 choices using switch case in C programming.
+first choice will be booking a seat. call a function that shows 3 destinations 
+namely Mombasa, Kisumu, Eldoret, provide an option for invalid input.
+store the destination in a struct.if they choose any, call a function that
+shows 3 different times(10am,2pm and 5pm) and prompt the user to choose. store the 
+time chosen as a string in the same struct. take user input for
+departure date(day/month/year) as intgers.call a function that takes user details (name,
+age, ID/passport number , phone number) and store in the same struct.
+ask if they will book another. go through the whole booking process if they say yes.
+second user's details will be stored in a separate struct.finish by calling a function that prints 
+the tickets and the cost combined if the user booked more than two tickets.
+
+second choice was reserving a seat. call the function that shows 3 destinations 
+namely Mombasa, Kisumu, Eldoret, provide an option for invlaid input.
+store the destination in a reservation struct.if they choose any, call a function that
+shows 3 different times(10am,2pm and 5pm) and prompt the user to choose. store the 
+time chosen as a string in the same struct.  take user input for
+departure date(day/month/year) as intgers.call the function that takes user details (name,
+age, ID/passport number , phone number) and store in the same struct.
+ask if they will book another. go through the whole booking process if they say yes.
+second user's details will be stored in a separate struct. finish by calling a function that prints 
+the tickets and the cost combined if the user booked more than two tickets.
+
+third choice in the case statement will be booking a return ticket. if they choose this,
+call a function that checks if the user first name is in any struct in the csv file.
+if yes , call a function that shows 3 destinations 
+namely Mombasa, Kisumu, Eldoret, provide an option for invalid input.
+if they choose any,store the destination in a struct and call a function that
+shows 3 different times(10am,2pm and 5pm) and prompt the user to choose. store the 
+time chosen as a string in the same struct. take user input for
+departure date(day/month/year) as intgers.call the function that takes user details (name,
+age, ID/passport number , phone number) and store in the same struct.
+ask if they will book another. go through the whole reservation process if they say yes.
+second user's details will be stored in a separate struct.finish by calling a function that prints 
+the tickets and the cost combined if the user booked more than two tickets.
+
+fourth choice was to exit the program.
