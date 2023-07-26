@@ -11,7 +11,7 @@ second user's details will be stored in a separate struct.finish by calling a fu
 the tickets and the cost combined if the user booked more than two tickets.
 
 second choice was reserving a seat. call the function that shows 3 destinations 
-namely Mombasa, Kisumu, Eldoret, provide an option for invlaid input.
+namely Mombasa, Kisumu, Eldoret, provide an option for invalid input.
 store the destination in a reservation struct.if they choose any, call a function that
 shows 3 different times(10am,2pm and 5pm) and prompt the user to choose. store the 
 time chosen as a string in the same struct.  take user input for
