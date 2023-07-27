@@ -5,7 +5,7 @@
 
 typedef struct {
     int age;
-    char passport[10];
+    char idpassport[10];
     char fname[50];
     char lname[50];
     char phone[15];
@@ -13,7 +13,6 @@ typedef struct {
     char time[10];
     int day;
     int month;
-    int year;
         
 } Person;
 
@@ -22,49 +21,71 @@ void printTicket(Person p);
 void printTicket(Person p)
 {
    //char flightno[] = "JM8655";
-    
-    printf("\t\t-------------------Ticket Reference---------------------\n");
+    int i = 0;
+    printf("\t\t------------------Ticket Reference %d--------------------\n", i + 1);
     printf("\t\tNAME: \t%s %s\tAGE: %d\n", p.fname, p.lname,p.age);
-    printf("\t\tID/PASSPORT: %s\tPHONE NUMBER:   %s\n", p.passport, p.phone);
-    printf("\t\tDESTINATION: %s\tTIME: %s\tDATE: %d/%d/%d\n", p.destination,p.time,p.day, p.month, p.year);
+    printf("\t\tID/PASSPORT: %s\tPHONE NUMBER:   %s\n", p.idpassport, p.phone);
+    printf("\t\tDESTINATION: %s\tTIME: %s\tDATE: %d/%d/2023\n", p.destination,p.time,p.day, p.month);
     printf("\t\t--------------------------------------------------------\n");
     //printf("\t\t\t Thank you for choosing PepeaKenya\n\n");    
 }
-void displayDestinations() {
+void onewayDestinations() {
     printf("\t\tAvailable Destinations:\n");
-    printf("\t1. Mombasa\t2.Kisumu\t3.Eldoret\n");    
+    printf("\t\tDestination\tPrice\n");
+    printf("\t 1.\tMombasa\t\tKsh. 6900\n");
+    printf("\t 2.\tKisumu\t\tKsh. 6900\n");
+    printf("\t 3.\tEldoret\t\tKsh. 6900\n");   
+}
+void twowayDestinations(){
+    printf("\t\tAvailable Destinations:\n");
+    printf("\t\tDestination\tPrice\n");
+    printf("\t 1.\tMombasa\t\tKsh. 13800\n");
+    printf("\t 2.\tKisumu\t\tKsh. 13800\n");
+    printf("\t 3.\tEldoret\t\tKsh. 13800\n");    
+}
+void reserveDestinations(){
+    printf("\t\tAvailable Destinations:\n");
+    printf("\t\tDestination\tPrice\n");
+    printf("\t\t1. Mombasa\tKsh. 6900\n");
+    printf("\t\t2.Kisumu\tKsh. 6900\n");
+    printf("\t\t3.Eldoret\tKsh. 6900\n");
 }
 void displayTimes() {
-    printf("\t\tAvailable Times:\n");
+    printf("\n\t\tAvailable Times:\n");
     printf("\t1. 10am\t\t2. 2pm\t\t3. 5pm\n");
-   }
-
+}
+//to be deleted
+int calculateTotalCost(int ticketCount){
+    const int PRICE_PER_TICKET = 6900;
+    return ticketCount * PRICE_PER_TICKET;
+}
 
 
 int main()
 {
     Person person;
     Person resperson;
+    Person twowayperson;
     int choice;
     int totalCost = 0;
-    
-
+    int ticketCount = 0;
 
     while(1){
         printf("\n\t----------WELCOME TO PEPEAKENYA TICKETING SYSTEM---------\n");
-        printf("\t\t\t1. Book Ticket\n");
-        printf("\t\t\t2. Reserve a Seat\n");
-        printf("\t\t\t3. Exit Program\n");
-        printf("\tEnter your choice (1,2 or 3):\t");
+        printf("\t\t\t1. Book One-Way Ticket\n");
+        printf("\t\t\t2. Book Two-Way Ticket\n");
+        printf("\t\t\t3. Make Seat Reservation\n");
+        printf("\t\t\t4. Exit\n");
+        printf("\tEnter your choice (1,2,3 or 4):\t");
         scanf("%d", &choice);
 
         switch (choice)
         {
         case 1:            
-            printf("\t\tNow Booking a Ticket.....\n");
+            printf("\t\tNow Booking One-Way Ticket.....\n");
 
             int destination;
-            displayDestinations();
+            onewayDestinations();
             printf("\t\tPlease choose your destination:\t");            
             scanf("%d", &destination);
             
@@ -104,13 +125,11 @@ int main()
                 printf("Please enter a valid choice.\n");    
                 continue;
             }
-            printf("\tEnter DATE of Departure(DD/MM/YY):\n");
+            printf("\t\nEnter DATE of Departure(DD/MM):\n");
             printf("\t\tEnter day:\t");
             scanf("%d", &person.day);
             printf("\t\tEnter month:\t");
             scanf("%d", &person.month);
-            printf("\t\tEnter year:\t");
-            scanf("%d", &person.year);
             printf("\n\tEnter your NAME:\n");
             printf("\t\tFirst Name:\t");
             scanf("%s", person.fname);
@@ -119,7 +138,7 @@ int main()
             printf("\n\tEnter AGE:\t");
             scanf("%d", &person.age);
             printf("\n\tEnter ID or Passport Number:\t");
-            scanf("%s", person.passport);
+            scanf("%s", person.idpassport);
             printf("\n\tEnter Phone Number:\t");
             scanf("%s", person.phone);
             
@@ -132,10 +151,11 @@ int main()
               return 1;
              }
 
-            fprintf(outfile, "%d,%s,%s,%s,%s,%s,%s,%d,%d,%d\n",
-             person.age,person.passport, person.fname, person.lname,
-              person.phone, person.destination, person.time,
-              person.day, person.month, person.year);
+            fprintf(outfile, "%d,%s,%s,%s,%s,%s,%s,%d,%d\n",person.age,
+                person.idpassport, person.fname, person.lname,
+                person.phone, person.destination, person.time,
+                person.day, person.month
+             );
 
             if (ferror(outfile)){
                 printf("\n\tBooking UNSUCCESSFUL. Please try again.\n");
@@ -145,13 +165,114 @@ int main()
             }
             fclose(outfile);
             printTicket(person);
+            ticketCount++;
 
+            char again;
+            printf("\n\tDo you want to book another ticket? (y/n)\t");
+            scanf("%s", &again);
+
+            if(again == 'N' || again == 'n'){
+                printf("\n\t\tThank you for using our ticketing system.\n");
+                printf("\n\tHere are your tickets:\n");
+                for (int i = 0; i < ticketCount; i++)
+                {
+                    printTicket(person);
+                }
+                printf("\n\t\tTotal Cost: Ksh. %d\n", calculateTotalCost(ticketCount));
+                return 0;
+            }
 
             break;
+        
         case 2:
+            printf("\t\tNow Booking Two-Way Ticket.....\n");
+            int twowaydestination;
+            twowayDestinations();
+            printf("\t\tPlease choose your destination: \t");
+            scanf("%d", &twowaydestination);
+
+            switch (twowaydestination)
+            {
+            case 1:
+                strcpy(twowayperson.destination, "Mombasa");
+                break;
+            case 2:
+                strcpy(twowayperson.destination, "Kisumu");
+                break;
+            case 3:
+                strcpy(twowayperson.destination, "Eldoret");
+                break;
+            default:
+                printf("Please enter a valid choice\n");
+            continue;
+            }
+            
+            int twowaytime;
+            displayTimes();
+            printf("\t\tPlease choose time:\t");            
+            scanf("%d", &twowaytime);
+
+            switch (twowaytime)
+            {
+            case 1:
+                strcpy(twowayperson.time, "10am");
+                break;
+            case 2:
+                strcpy(twowayperson.time, "2pm");
+                break;
+            case 3:
+                strcpy(twowayperson.time, "5pm");
+                break;
+            default:
+                printf("/tPlease enter a valid choice\n");    
+                continue;
+            }
+            printf("\n\tEnter DATE of Departure(DD/MM):\n");
+            printf("\t\tEnter day: \t");
+            scanf("%d", &twowayperson.day);
+            printf("\t\tEnter month: \t");
+            scanf("%d", &twowayperson.month);
+            printf("\n\tEnter NAME:\n");
+            printf("\t\tFirst Name: \t");
+            scanf("%s", twowayperson.fname);
+            printf("\t\tLast Name: \t");
+            scanf("%s", twowayperson.lname);
+            printf("\n\tEnter AGE: \t");
+            scanf("%d", &twowayperson.age);
+            printf("\n\tEnter ID or Passport Number: \t");
+            scanf("%s", twowayperson.idpassport);
+            printf("\n\tEnter PHONE NUMBER: \t");
+            scanf("%s", twowayperson.phone);
+
+
+            FILE *twowayfile;
+            twowayfile = fopen("twowaybooking.csv", "a+");
+            if (twowayfile == NULL)
+            {
+              printf("Error opening file!\n");
+              return 1;
+             }
+
+            fprintf(twowayfile, "%d,%s,%s,%s,%s,%s,%s,%d,%d\n",twowayperson.age,
+                twowayperson.idpassport, twowayperson.fname, twowayperson.lname,
+                twowayperson.phone, twowayperson.destination, twowayperson.time,
+                twowayperson.day, twowayperson.month
+             );
+
+            if (ferror(twowayfile)){
+                printf("\tBooking UNSUCCESSFUL. Please try again.\n");
+                return 1;
+            }else{
+                printf("\n\tBooking Successful!\n\n");
+            }
+            fclose(twowayfile);
+            printTicket(twowayperson);
+
+            break;
+        case 3:
             printf("\t\tNow Reserving a Seat.....\n");
             int resdestination;
-            displayDestinations();
+            reserveDestinations();
             printf("\t\tPlease choose your destination: \t");
             scanf("%d", &resdestination);
             
@@ -191,13 +312,11 @@ int main()
                 printf("/tPlease enter a valid choice\n");    
                 continue;
             }
-            printf("\n\tEnter DATE of Departure(DD/MM/YY):\n");
+            printf("\n\tEnter DATE of Departure(DD/MM):\n");
             printf("\t\tEnter day: \t");
             scanf("%d", &resperson.day);
             printf("\t\tEnter month: \t");
             scanf("%d", &resperson.month);
-            printf("\t\tEnter year: \t");
-            scanf("%d", &resperson.year);
             printf("\n\tEnter NAME:\n");
             printf("\t\tFirst Name: \t");
             scanf("%s", resperson.fname);
@@ -206,7 +325,7 @@ int main()
             printf("\n\tEnter AGE: \t");
             scanf("%d", &resperson.age);
             printf("\n\tEnter ID or Passport Number: \t");
-            scanf("%s", resperson.passport);
+            scanf("%s", resperson.idpassport);
             printf("\n\tEnter PHONE NUMBER: \t");
             scanf("%s", resperson.phone);
 
@@ -221,10 +340,10 @@ int main()
               return 1;
              }
 
-            fprintf(reservefile, "%d,%s,%s,%s,%s,%s,%s,%d,%d,%d\n",resperson.age,
-                resperson.passport, resperson.fname, resperson.lname,
+            fprintf(reservefile, "%d,%s,%s,%s,%s,%s,%s,%d,%d\n",resperson.age,
+                resperson.idpassport, resperson.fname, resperson.lname,
                 resperson.phone, resperson.destination, resperson.time,
-                resperson.day, resperson.month, resperson.year
+                resperson.day, resperson.month
              );
 
             if (ferror(reservefile)){
@@ -236,49 +355,19 @@ int main()
             fclose(reservefile);
             printTicket(resperson);
 
-            break;
-        case 3:
+            break; 
+        case 4:
             printf("\tThank you for using our ticketing system.");
-            printf("\n\n\tExiting program...:) :)\n");
+            ticketCount++;
+            
+            printf("\n\n\tExiting program:)\n");
             exit(0);    
         default:
             printf("\n\t\tPlease enter a valid choice(1, 2 or 3).\n");
             break;
         }
     }
-    /*
-    printf("Enter customer details:\n");
-    
-    printf("\nID or Passport Number: ");
-    scanf("%s", person.passport);
-    printf("\nFirst name: ");
-    scanf("%s", person.fname);
-    printf("\nLast name: ");
-    scanf("%s", person.lname); 
-    printf("\nPhone number: ");
-    scanf("%s", person.phone);
-    printf("\nEnter your Departure Date(DD/MM/YY):");
-    printf("Day: ");
-    scanf("%d", &person.day);
-    printf("Month (enter number): ");
-    scanf("%d", &person.month);
-    printf("Year: ");
-    scanf("%d", &person.year);
+  
 
-
-    fprintf(outfile, "%d,%s,%s,%s,%s,%d,%d,%d\n", person.age,
-     person.passport, person.fname, person.lname, person.phone,
-      person.day, person.month, person.year);
-
-    if (ferror(outfile))
-    {
-        printf("Error writing file!\n");
-        return 1;
-    }
-    */
-    //fclose(outfile);   
-    //printf("\nCustomer record written to file!\n\n");
-
-    //printTicket(person);
     return 0;
 }
