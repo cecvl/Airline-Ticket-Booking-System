@@ -46,15 +46,15 @@ void twowayDestinations(){
 void reserveDestinations(){
     printf("\t\tAvailable Destinations:\n");
     printf("\t\tDestination\tPrice\n");
-    printf("\t\t1. Mombasa\tKsh. 6900\n");
-    printf("\t\t2.Kisumu\tKsh. 6900\n");
-    printf("\t\t3.Eldoret\tKsh. 6900\n");
+    printf("\t 1.\tMombasa\t\tKsh. 3450\n");
+    printf("\t 2.\tKisumu\t\tKsh. 3450\n");
+    printf("\t 3.\tEldoret\t\tKsh. 3450\n");
 }
 void displayTimes() {
     printf("\n\t\tAvailable Times:\n");
     printf("\t1. 10am\t\t2. 2pm\t\t3. 5pm\n");
 }
-//to be deleted
+
 int calculateTotalCost(int ticketCount){
     const int PRICE_PER_TICKET = 6900;
     return ticketCount * PRICE_PER_TICKET;

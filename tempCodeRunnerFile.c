@@ -1,10 +1,4 @@
-int age;
-    char passport[10];
-    char fname[50];
-    char lname[50];
-    char phone[15];
-    char destination[30];
-    char time[10];
+char time[10];
     int day;
     int month;
     int year;
