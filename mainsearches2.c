@@ -31,7 +31,7 @@ void printPerson(const Person* person) {
 
 int main() {
     FILE *csvFile;
-    csvFile = fopen("mainreserve.csv", "r");
+    csvFile = fopen("mainbooking.csv", "r");
     if (csvFile == NULL) {
         printf("Error opening file!\n");
         return 1;
