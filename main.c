@@ -16,19 +16,31 @@ typedef struct {
         
 } Person;
 
+
 void printTicket(Person p);
+void printReservations(Person p);
 
 void printTicket(Person p)
 {
-   //char flightno[] = "JM8655";
-    int i = 0;
-    printf("\t\t------------------Ticket Reference %d--------------------\n", i + 1);
-    printf("\t\tNAME: \t%s %s\tAGE: %d\n", p.fname, p.lname,p.age);
+   
+    printf("\t\t------------------Ticket Reference-----------------------\n");
+    printf("\t\tNAME: \t%s %s\t\tAGE: %d\n", p.fname, p.lname,p.age);
     printf("\t\tID/PASSPORT: %s\tPHONE NUMBER:   %s\n", p.idpassport, p.phone);
     printf("\t\tDESTINATION: %s\tTIME: %s\tDATE: %d/%d/2023\n", p.destination,p.time,p.day, p.month);
     printf("\t\t--------------------------------------------------------\n");
     //printf("\t\t\t Thank you for choosing PepeaKenya\n\n");    
 }
+
+void printReservations(Person p)
+{
+    printf("\t\t------------------Reservation-----------------------\n");
+    printf("\t\tNAME: \t%s %s\tAGE: %d\n", p.fname, p.lname,p.age);
+    printf("\t\tID/PASSPORT: %s\tPHONE NUMBER:   %s\n", p.idpassport, p.phone);
+    printf("\t\tDESTINATION: %s\tTIME: %s\tDATE: %d/%d/2023\n", p.destination,p.time,p.day, p.month);
+    printf("\t\t--------------------------------------------------------\n");
+}
+   
+
 void onewayDestinations() {
     printf("\t\tAvailable Destinations:\n");
     printf("\t\tDestination\tPrice\n");
@@ -37,14 +49,14 @@ void onewayDestinations() {
     printf("\t 3.\tEldoret\t\tKsh. 6900\n");   
 }
 void twowayDestinations(){
-    printf("\t\tAvailable Destinations:\n");
+    printf("\t\t\n\nAvailable Destinations:\n");
     printf("\t\tDestination\tPrice\n");
     printf("\t 1.\tMombasa\t\tKsh. 13800\n");
     printf("\t 2.\tKisumu\t\tKsh. 13800\n");
     printf("\t 3.\tEldoret\t\tKsh. 13800\n");    
 }
 void reserveDestinations(){
-    printf("\t\tAvailable Destinations:\n");
+    printf("\t\t\nAvailable Destinations:\n");
     printf("\t\tDestination\tPrice\n");
     printf("\t 1.\tMombasa\t\tKsh. 3450\n");
     printf("\t 2.\tKisumu\t\tKsh. 3450\n");
@@ -59,16 +71,22 @@ int calculateTotalCost(int ticketCount){
     const int PRICE_PER_TICKET = 6900;
     return ticketCount * PRICE_PER_TICKET;
 }
+int calculateReserveCost(int ticketCount){
+    const int PRICE_PER_RESERVE = 3450;
+    return ticketCount * PRICE_PER_RESERVE;
+} 
 
 
 int main()
 {
-    Person person;
-    Person resperson;
+    Person person;    
     Person twowayperson;
+    Person resperson;
     int choice;
     int totalCost = 0;
     int ticketCount = 0;
+    int twoticketCount = 0;
+    int resticketCount = 0;
 
     while(1){
         printf("\n\t----------WELCOME TO PEPEAKENYA TICKETING SYSTEM---------\n");
@@ -158,10 +176,10 @@ int main()
              );
 
             if (ferror(outfile)){
-                printf("\n\tBooking UNSUCCESSFUL. Please try again.\n");
+                printf("\n\tBooking Reference NOT generated. Please try again.\n");
                 return 1;
             }else{
-                printf("\n\tBooking Successful!\n\n");
+                printf("\n\tBooking Reference generated.\n\n");
             }
             fclose(outfile);
             printTicket(person);
@@ -260,13 +278,31 @@ int main()
              );
 
             if (ferror(twowayfile)){
-                printf("\tBooking UNSUCCESSFUL. Please try again.\n");
+                printf("\tBooking Reference NOT generated. Please try again.\n");
                 return 1;
             }else{
                 printf("\n\tBooking Successful!\n\n");
             }
             fclose(twowayfile);
             printTicket(twowayperson);
+            ticketCount++;
+
+            //loop 2
+
+            char againtwo;
+            printf("\n\tDo you want to book another ticket? (y/n)\t");
+            scanf("%s", &againtwo);
+
+            if(againtwo == 'N' || againtwo == 'n'){
+                printf("\n\t\tThank you for using our ticketing system.\n");
+                printf("\n\tHere are your tickets:\n");
+                for (int i = 0; i < twoticketCount; i++)
+                {
+                    printTicket(twowayperson);
+                }
+                printf("\n\t\tTotal Cost: Ksh. %d\n", calculateTotalCost(twoticketCount));
+                return 0;
+            }
 
             break;
         case 3:
@@ -330,30 +366,42 @@ int main()
             scanf("%s", resperson.phone);
 
 
-            //totalCost += 100;
-
-            FILE *reservefile;
-            reservefile = fopen("mainreserve.csv", "a+");
-            if (reservefile == NULL)
+            FILE *rfile;
+            rfile = fopen("reservations.csv", "a+");
+            if (rfile == NULL)
             {
               printf("Error opening file!\n");
               return 1;
              }
-
-            fprintf(reservefile, "%d,%s,%s,%s,%s,%s,%s,%d,%d\n",resperson.age,
+            fprintf(rfile, "%d,%s,%s,%s,%s,%s,%s,%d,%d\n",resperson.age,
                 resperson.idpassport, resperson.fname, resperson.lname,
                 resperson.phone, resperson.destination, resperson.time,
                 resperson.day, resperson.month
              );
+             if(ferror(rfile)){
+                 printf("\tReservation UNSUCCESSFUL. Please try again.\n"); 
+             }else{
+                 printf("\n\tReservation Successful!\n\n");
+             }
+            fclose(rfile);
+            printReservations(resperson);
+            ticketCount++;
+            //loop 3
 
-            if (ferror(reservefile)){
-                printf("\tReservation UNSUCCESSFUL. Please try again.\n");
-                return 1;
-            }else{
-                printf("\n\tReservation Successful!\n\n");
+            char againthree;
+            printf("\n\tDo you want to book another ticket? (y/n)\t");
+            scanf("%s", &againthree);
+
+            if( againthree== 'N' || againthree == 'n'){
+                printf("\n\t\tThank you for using our ticketing system.\n");
+                printf("\n\tHere are your reservations:\n");
+                for (int i = 0; i < resticketCount; i++)
+                {
+                    printReservations(resperson);
+                }
+                printf("\n\n\n\t\tTotal Cost: Ksh. %d\n", calculateReserveCost(resticketCount));
+                return 0;
             }
-            fclose(reservefile);
-            printTicket(resperson);
 
             break; 
         case 4:
