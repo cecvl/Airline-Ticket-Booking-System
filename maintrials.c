@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define MAX_BOOKINGS 100
+
 
 typedef struct {
     int age;
@@ -94,6 +96,10 @@ int main()
     int ticketCount = 0;
     int twoticketCount = 0;
     int resticketCount = 0;
+
+    Person onewayBookings[MAX_BOOKINGS];
+    Person twowayBookings[MAX_BOOKINGS];
+    Person reserveBookings[MAX_BOOKINGS];
 
     while(1){
         printf("\n\t----------WELCOME TO PEPEAKENYA TICKETING SYSTEM---------\n");
@@ -190,6 +196,9 @@ int main()
             }
             fclose(outfile);
             printTicket(person);
+            // Add this line before storing the booking
+            //onewayBookings[ticketCount] = person;
+
             ticketCount++;
 
             char again;
@@ -292,6 +301,7 @@ int main()
             }
             fclose(twowayfile);
             printTicket(twowayperson);
+            twowayBookings[twoticketCount] = twowayperson;
             twoticketCount++;
 
             //loop 2
@@ -391,6 +401,7 @@ int main()
              }
             fclose(rfile);
             printReservations(resperson);
+            reserveBookings[resticketCount] = resperson;
             resticketCount++;
             //loop 3
 
@@ -400,9 +411,9 @@ int main()
 
             if( againthree== 'N' || againthree == 'n'){
                 printf("\n\tHere are your reservations:\n");
-                for (int i = 0; i < resticketCount; i++) //int i
+                for (int i = 0; i < resticketCount; i++) //int i?
                 {
-                    printReservations(resperson);
+                    printReservations(reserveBookings[i]); //changed line for trials
                 }
                 printf("\n\n\t\tTotal Cost of RESERVATION(S): Ksh. %d\n\n\n", calculateReserveCost(resticketCount));
                 return 0;
