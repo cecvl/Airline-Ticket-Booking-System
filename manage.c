@@ -14,6 +14,9 @@ struct Customer {
     char time[10];
     int day;
     int month;
+    char returntime[10];
+    int returnday;
+    int returnmonth;
 };
 
 // Function to initialize the customer structure with default values
@@ -44,7 +47,7 @@ int findCustomersByFirstNameAndPassport(const char* csvFileName, const char* fir
         struct Customer currentCustomer;
         initializeCustomer(&currentCustomer);
 
-        sscanf(buffer, "%d,%9[^,],%49[^,],%49[^,],%14[^,],%29[^,],%9[^,],%d,%d",
+        sscanf(buffer, "%d,%9[^,],%49[^,],%49[^,],%14[^,],%29[^,],%9[^,],%d,%d,%9[^,],%d,%d",
             &currentCustomer.age,
             currentCustomer.idpassport,
             currentCustomer.fname,
@@ -53,7 +56,10 @@ int findCustomersByFirstNameAndPassport(const char* csvFileName, const char* fir
             currentCustomer.destination,
             currentCustomer.time,
             &currentCustomer.day,
-            &currentCustomer.month
+            &currentCustomer.month,
+            currentCustomer.returntime,
+            &currentCustomer.returnday,
+            &currentCustomer.returnmonth
         );
 
         if (strcmp(currentCustomer.fname, firstName) == 0 && strcmp(currentCustomer.idpassport, passportNumber) == 0) {
@@ -70,11 +76,11 @@ int main() {
     char searchFirstName[50];
     char searchPassport[10];
 
-    printf("SEARCH FOR CUSTOMER BY FIRST NAME AND PASSPORT NUMBER\n\n");
-    printf("Enter the first name to search: ");    
+    printf("\t----------PEPEAKENYA FLIGHT MANAGEMENT---------\n\n");
+    printf("\tEnter the FIRST NAME to search: ");    
     scanf("%s", searchFirstName);
 
-    printf("Enter  ID/Passport number to search: ");
+    printf("\tEnter  ID/Passport Number to search: ");
     scanf("%s", searchPassport);
 
     struct Customer matchingCustomers[MAX_CUSTOMERS];
@@ -87,14 +93,14 @@ int main() {
     if (numMatches == 0) {
         printf("\nCustomer with first name '%s' and passport number '%s' not found.\n", searchFirstName, searchPassport);
     } else {
-        printf("\n\t\t\t---------------Customer Found---------------\n");
+        printf("\n\t\t---------------Customers Found(%d)--------------\n", numMatches);
         for (int i = 0; i < numMatches; i++) {
             struct Customer foundCustomer = matchingCustomers[i];
-            printf("\t\t\tNAME: %s %s\t\tAGE: %d\n", foundCustomer.fname, foundCustomer.lname, foundCustomer.age);
-            printf("\t\t\tID/PASSPORT NO: %s\n", foundCustomer.idpassport);
-            printf("\t\t\tDEPARTURE DATE: %d/%d/2023\n\n", foundCustomer.day, foundCustomer.month);
-            printf("\t\t\t--------------------------------------------\n");
-            // Print other fields as needed
+            printf("\t\tNAME: %s %s\t\tAGE: %d\n", foundCustomer.fname, foundCustomer.lname, foundCustomer.age);
+            printf("\t\tID/PASSPORT NO: %s\n", foundCustomer.idpassport);
+            printf("\t\tDEPARTURE DATE: %d/%d/2023\n", foundCustomer.day, foundCustomer.month);
+            printf("\t\t--------------------------------------------\n");
+            
         }
     }
 
