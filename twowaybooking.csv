@@ -1,21 +1,3 @@
-AGE,ID/PASSPORT,FIRST NAME,LAST NAME,PHONE NO,DESTINATION,TIME,DAY,MONTH
-23,2352525,howard,stark,778857883,Mombasa,10am,1,2
-40,8742,rea,iys,789247292,Mombasa,10am,23,5
-45,36363,mahalia,craze,7345783535,Mombasa,10am,23,8
-31,3466373,karius,lord,72525665,Mombasa,2pm,12,2
-19,25928952,tina,iano,72572626,Kisumu,2pm,23,2
-30,334,usss,feny,725252,Kisumu,2pm,23,3
-23,87982,oliver,owen,726768222,Kisumu,2pm,23,2
-23,232,tos,dox,7292582,Kisumu,2pm,12,2
-23,28927,resd,akac,78872682,Kisumu,2pm,23,2
-67,252525,desmond,tutu,727827582,Mombasa,10am,2,2
-24,54733,future,eight,725887925,Eldoret,10am,5,10
-3,232232,roisee,whoo,72525,Mombasa,2pm,3,23
-3,3433,dre,fre,73982925,Mombasa,2pm,2,2
-29,45870,swae,lee,78265894,Kisumu,2pm,23,2
-43,35663,fault,made,72589789,Mombasa,2pm,12,2
-20,25252,wes,sza,0725897982,Kisumu,2pm,23,10
-32,2525252,burna,boy,0725692792,Mombasa,2pm,30,12
-34,542525,dec,lan,0728297834,Mombasa,10am,1,1
-34,2522,hero,nas,0725878925,Mombasa,10am,30,10
-40,2425,lan,ding,0792789223,Kisumu,10am,1,1
+AGE,ID PASSPORT,FNAME,LNAME,PHONE,DESTINATION,TIME,DAY ,MONTH,RET TIME,RET DAY ,RET MONTH
+23,23525,chris,cecil,07258725,Kisumu,2pm,2,2,5pm,3,3
+34,24525,chris,asuna,0726572,Mombasa,2pm,1,1,10am,1,2
