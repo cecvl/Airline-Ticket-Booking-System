@@ -72,7 +72,7 @@ int findCustomersByFirstNameAndPassport(const char* csvFileName, const char* fir
 }
 
 int main() {
-    char csvFileName[] = "twowaybooking.csv";
+    char csvFileName[] = "reservations.csv";
     char searchFirstName[50];
     char searchPassport[10];
 
