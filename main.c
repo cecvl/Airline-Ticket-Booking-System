@@ -15,15 +15,25 @@ typedef struct {
     char time[10];
     int day;
     int month;
-    char returntime[10];
-    int returnday;
-    int returnmonth; //to be used to store return dates
         
 } Person;
 
+typedef struct {
+    int age;
+    char idpassport[10];
+    char fname[50];
+    char lname[50];
+    char phone[15];
+    char destination[30];
+    char time[10];
+    int day;
+    int month;
+    char returntime[10];//3 additional variables for two-way ticket
+    int returnday;
+    int returnmonth; 
+        
+} Twoperson;
 
-void printTicket(Person p);
-void printReservations(Person p);
 
 void printTicket(Person p)
 {
@@ -36,18 +46,22 @@ void printTicket(Person p)
        
 }
 
-void printTwoWayTicket(Person p)
+void printTwoWayTicket(Twoperson p)
 {
     printf("\t\tNAME: \t%s %s\t\tAGE: %d\n", p.fname, p.lname,p.age);
     printf("\t\tID/PASSPORT: %s\tPHONE NUMBER:   %s\n", p.idpassport, p.phone);
     printf("\t\tFROM:\tNAIROBI\t\tTO:\t%s\n", p.destination);
     printf("\t\tTIME:\t%s\t\tDATE:\t%d/%d/2023\n",p.time,p.day, p.month);
     printf("\t\t--------------------------------------------------------");
-    printf("\n\t\t\t\t-----\t----RETURN DETAILS-----\t----\n");
-    printf("\n\t\tFROM: %s\t\tTO: NAIROBI\n", p.destination);
-    printf("\t\tRETURN TIME: %s\tRETURN DATE: %d/%d/2023\n", p.returntime, p.returnday, p.returnmonth);
-    printf("\t\t--------------------------------------------------------\n");
+    
        
+}
+void printReturn(Twoperson p)
+{
+    printf("\n\t\t----------\t-----RETURN DETAILS-----\t---------\n");
+    printf("\t\tFROM: %s\t\tTO: NAIROBI\n", p.destination);
+    printf("\t\tRETURN TIME: %s\tRETURN DATE: %d/%d/2023\n", p.returntime, p.returnday, p.returnmonth);
+    printf("\t\t--------------------------------------------------------\n"); 
 }
 
 void printReservations(Person p)
@@ -68,8 +82,6 @@ void onewayDestinations() {
     printf("\t 3.\tEldoret\t\tKsh. 6900\n");   
 }
 
-/* #TWO WAY TRIP means a return trip between two points
- (same day or at a later date)*/
 void twowayDestinations(){
     printf("\n\n\t\tAvailable Destinations:\n");
     printf("\t\tDestination\tPrice\n");
@@ -118,18 +130,20 @@ int calculateReserveCost(int ticketCount){
 
 int main()
 {
-    Person person;    
-    Person twowayperson;
-    Person resperson;
+    Person person;          //one way
+    Twoperson twowayperson; //two-way
+    Person resperson;      //reservation
+
+    Person onewayBookings[MAX_BOOKINGS];
+    Twoperson twowayBookings[MAX_BOOKINGS];
+    Person reserveBookings[MAX_BOOKINGS];
+    
     int choice;
-    int totalCost = 0;
     int ticketCount = 0;
     int twoticketCount = 0;
     int resticketCount = 0;
 
-    Person onewayBookings[MAX_BOOKINGS];
-    Person twowayBookings[MAX_BOOKINGS];
-    Person reserveBookings[MAX_BOOKINGS];
+   
 
     while(1){
         printf("\n\t----------WELCOME TO PEPEAKENYA TICKETING SYSTEM---------\n");
@@ -137,7 +151,7 @@ int main()
         printf("\t\t\t2. Two-Way Ticket(Return Ticket)\n");
         printf("\t\t\t3. Seat Reservation\n");
         printf("\t\t\t4. Exit\n");
-        printf("\tEnter your choice (1,2,3 or 4):\t");
+        printf("\t\tEnter your choice (1,2,3 or 4):\t");
         scanf("%d", &choice);
 
         switch (choice)
@@ -358,7 +372,7 @@ int main()
                 printf("\n\tTwo-Way Booking reference generated.\n\n");
             }
             fclose(twowayfile);
-            printTicket(twowayperson);
+            printTwoWayTicket(twowayperson);
             twowayBookings[twoticketCount] = twowayperson;
             twoticketCount++;
 
@@ -374,6 +388,7 @@ int main()
                 {
                     printf("\n\t\t-------------------TWO-WAY TICKET %d--------------------\n", i+1);
                     printTwoWayTicket(twowayBookings[i]);
+                    printReturn(twowayBookings[i]);
                 }
                 printf("\n\t\tTotal Cost of TWO-WAY TICKETS(%d): Ksh. %d\n",twoticketCount, calculateTwoWayCost(twoticketCount));
                 displayBorderLine();
@@ -381,6 +396,7 @@ int main()
             }
 
             break;
+
         case 3:
             printf("\n\t\tNow Reserving a Seat.....\n");
             int resdestination;
