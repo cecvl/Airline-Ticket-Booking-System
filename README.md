@@ -10,7 +10,7 @@ Has 4 modules: main.c , managereserve.c , manageoneway.c , managetwoway.c.  Has 
 
 
 # user interfaces:
-customer : 1.Book one-way or two-way tickets. 2.Make reservation requests
-flight management :1.Cancel bookings and reservations. 2.Search and alter customer details.
+Customer interface: Book one-way or two-way tickets. Make reservation requests.
+Flight management interface: Search customer details. Cancel bookings and reservations. 
 
 
