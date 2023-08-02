@@ -2,9 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 
+
 #define MAX_BOOKINGS 100
 
-
+//handle one-way ticket & reservation
 typedef struct {
     int age;
     char idpassport[10];
@@ -18,6 +19,7 @@ typedef struct {
         
 } Person;
 
+//handle two-way ticket
 typedef struct {
     int age;
     char idpassport[10];
@@ -37,7 +39,6 @@ typedef struct {
 
 void printTicket(Person p)
 {
-    
     printf("\t\t--------------------------------------------------------\n");
     printf("\t\tNAME: \t%s %s\t\tAGE: %d\n", p.fname, p.lname,p.age);
     printf("\t\tID/PASSPORT: %s\tPHONE NUMBER:   %s\n", p.idpassport, p.phone);
@@ -53,9 +54,8 @@ void printTwoWayTicket(Twoperson p)
     printf("\t\tFROM:\tNAIROBI\t\tTO:\t%s\n", p.destination);
     printf("\t\tTIME:\t%s\t\tDATE:\t%d/%d/2023\n",p.time,p.day, p.month);
     printf("\t\t--------------------------------------------------------");
-    
-       
 }
+
 void printReturn(Twoperson p)
 {
     printf("\n\t\t----------\t-----RETURN DETAILS-----\t---------\n");
@@ -66,14 +66,13 @@ void printReturn(Twoperson p)
 
 void printReservations(Person p)
 {
-    
     printf("\t\tNAME: \t%s %s\tAGE: %d\n", p.fname, p.lname,p.age);
     printf("\t\tID/PASSPORT: %s\tPHONE NUMBER:   %s\n", p.idpassport, p.phone);
     printf("\t\tDESTINATION: %s\tTIME: %s  DATE: %d/%d/2023\n", p.destination,p.time,p.day, p.month);
     printf("\t\t------------------------------------------------------\n");
-}
-   
+}  
 
+// functions to display times and destinations
 void onewayDestinations() {
     printf("\n\t\tAvailable Destinations:\n");
     printf("\t\tDestination\tPrice\n");
@@ -110,23 +109,22 @@ void displayBorderLine(){
     printf("\t\t------------------------------------------------------\n");
 }
 
-//calculate one-way ticket costs
+//fucntion to calculate ticket costs
+//one-way ticket costs
 int calculateOneWayCost(int ticketCount){
     const int PRICE_PER_ONE_WAY = 6900;
     return ticketCount * PRICE_PER_ONE_WAY;
 }
-//calculate two-way ticket costs
+//two-way ticket costs
 int calculateTwoWayCost(int twoticketCount){ 
     const int PRICE_PER_TWO_WAY = 13800;
     return twoticketCount * PRICE_PER_TWO_WAY;
 }
-//calculate reservation costs
+//reservation costs
 int calculateReserveCost(int ticketCount){
     const int PRICE_PER_RESERVE = 3450;
     return ticketCount * PRICE_PER_RESERVE;
 } 
-
-
 
 int main()
 {
@@ -134,7 +132,7 @@ int main()
     Twoperson twowayperson; //two-way
     Person resperson;      //reservation
 
-    Person onewayBookings[MAX_BOOKINGS];
+    Person onewayBookings[MAX_BOOKINGS]; // array of structs
     Twoperson twowayBookings[MAX_BOOKINGS];
     Person reserveBookings[MAX_BOOKINGS];
     
@@ -142,8 +140,6 @@ int main()
     int ticketCount = 0;
     int twoticketCount = 0;
     int resticketCount = 0;
-
-   
 
     while(1){
         printf("\n\t----------WELCOME TO PEPEAKENYA TICKETING SYSTEM---------\n");
@@ -219,7 +215,7 @@ int main()
             
             
             FILE *outfile;
-            outfile = fopen("mainbooking.csv", "a+");
+            outfile = fopen("onewaybooking.csv", "a+");
             if (outfile == NULL)
             {
               printf("Error opening file!\n");
@@ -240,9 +236,7 @@ int main()
             }
             fclose(outfile);
             printTicket(person);
-            // Add this line before storing the booking
             //onewayBookings[ticketCount] = person;
-
             ticketCount++;
 
             char again;
@@ -250,7 +244,6 @@ int main()
             scanf("%s", &again);
 
             if(again == 'N' || again == 'n'){
-                //printf("\n\tHere are your tickets:\n");
                 for (int i = 0; i < ticketCount; i++)
                 {
                     printf("\n\t\t-------------------ONE-WAY TICKET (%d)-------------------\n", i+1);
@@ -306,6 +299,7 @@ int main()
                 printf("/tPlease enter a valid choice\n");    
                 continue;
             }
+
             printf("\n\tEnter DATE of Departure(DD/MM):\n");
             printf("\t\tEnter day: \t");
             scanf("%d", &twowayperson.day);
@@ -383,8 +377,7 @@ int main()
             scanf("%s", &againtwo);
 
             if(againtwo == 'N' || againtwo == 'n'){
-                //printf("\n\tHere are your tickets:\n");
-                for (int i = 0; i < twoticketCount; i++) //int j?
+                for (int i = 0; i < twoticketCount; i++) //using int i doesn't interfere with loop 1
                 {
                     printf("\n\t\t-------------------TWO-WAY TICKET %d--------------------\n", i+1);
                     printTwoWayTicket(twowayBookings[i]);
@@ -398,6 +391,7 @@ int main()
             break;
 
         case 3:
+            // Reservation
             printf("\n\t\tNow Reserving a Seat.....\n");
             int resdestination;
             reserveDestinations();
@@ -486,11 +480,10 @@ int main()
             scanf("%s", &againthree);
 
             if( againthree== 'N' || againthree == 'n'){
-                //printf("\n\tHere are your reservations:\n");
-                for (int i = 0; i < resticketCount; i++) //int i?
+                for (int i = 0; i < resticketCount; i++)
                 {
                     printf("\n\t\t--------------------RESERVATION %d---------------------\n", i+1);
-                    printReservations(reserveBookings[i]); //changed line for trials
+                    printReservations(reserveBookings[i]);
                 }
                 printf("\n\t\tTotal Cost of RESERVATIONS(%d): Ksh. %d\n",resticketCount, calculateReserveCost(resticketCount));
                 displayBorderLine();
@@ -500,7 +493,7 @@ int main()
             break; 
         case 4:
             printf("\n\tYou're welcome to using PepeaKenya Ticketing system again.");            
-            printf("\n\n\tExiting program.....\n");
+            //printf("\n\n\tExiting program.....\n");
             exit(0);    
         default:
             printf("\n\t\tPlease enter a valid choice(1, 2 or 3).\n");
