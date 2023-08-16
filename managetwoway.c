@@ -33,10 +33,6 @@ void initializeCustomer(struct Customer* customer) {
     customer->returnday = 0;
     customer->returnmonth = 0;
 }
-void displayBanner()
-{
-    printf("\n\n\t\tPepeaKenya Management system.\n");
-}
 
 // Function to search for customers by first name and passport number
 int findCustomersByFirstNameAndPassport(const char* csvFileName, const char* firstName, const char* passportNumber, struct Customer* matchingCustomers) {
@@ -85,19 +81,22 @@ int counttotalTwoWays(const char* csvFileName) {
         printf("Error opening file.\n");
         return totalTwoWays;
     }
-
     char buffer[200];
     while (fgets(buffer, sizeof(buffer), file)) {
         totalTwoWays++;
-    }
+    }//count the number of lines in the file
 
     fclose(file);
-    return totalTwoWays - 1;
+    return totalTwoWays - 1;//subtract the header line
 }
 
+void displayBanner()
+{
+    printf("\n\n\t\tPepeaKenya Management system.\n");
+}
 
-
-int main() {
+int main()
+{
     char csvFileName[] = "twowaybooking.csv";
     char searchFirstName[50];
     char searchPassport[10];
@@ -117,7 +116,7 @@ int main() {
     int numMatches = findCustomersByFirstNameAndPassport(csvFileName, searchFirstName, searchPassport, matchingCustomers);
 
     if (numMatches == 0) {
-        printf("\nReservation : first name '%s' and passport number '%s' not found.\n", searchFirstName, searchPassport);
+        printf("\n\tTicket NOT FOUND\tfirst name : %s | passport number: %s\n", searchFirstName, searchPassport);
     } else {
         printf("\n\t\t------------Tickets Found(%d)------------\n", numMatches);
         for (int i = 0; i < numMatches; i++) {
@@ -131,21 +130,13 @@ int main() {
 
         int choice;
         printf("\n\t\t-------Actions Available-------\n");
-        //("\t\t1. Total Number of Two-Way Tickets\n");
         printf("\t\t1. Delete Two-Way Ticket\n");
         printf("\t\t1. Exit\n");
         printf("\n\t\tSelect an action(1 or 2):\t");
         scanf("%d", &choice);
 
         switch (choice) {
-        /*
         case 1:
-            int totalTwoWays = counttotalTwoWays(csvFileName);
-            printf("\nTotal number of Two-Way Tickets: %d\n", totalTwoWays);
-            break;
-            */
-        case 1:
-            // Delete the customer from the CSV file
             FILE* tempFile = fopen("temp.csv", "w");
             if (tempFile == NULL) {
                 printf("Error creating temporary file.\n");
@@ -159,11 +150,11 @@ int main() {
                 return 1;
             }
 
-            char buffer[200];
+            char buffer[200]; //create a buffer to hold the contents of the file
             while (fgets(buffer, sizeof(buffer), file)) {
                 struct Customer currentCustomer;
                 initializeCustomer(&currentCustomer);
-                sscanf(buffer, "%d,%9[^,],%49[^,],%49[^,],%14[^,],%29[^,],%9[^,],%d,%d",
+                sscanf(buffer, "%d,%9[^,],%49[^,],%49[^,],%14[^,],%29[^,],%9[^,],%d,%d,%9[^,],%d,%d",
                     &currentCustomer.age,
                     currentCustomer.idpassport,
                     currentCustomer.fname,
@@ -172,12 +163,14 @@ int main() {
                     currentCustomer.destination,
                     currentCustomer.time,
                     &currentCustomer.day,
-                    &currentCustomer.month
+                    &currentCustomer.month,
+                    currentCustomer.returntime,
+                    &currentCustomer.returnday,
+                    &currentCustomer.returnmonth
                 );
 
                 if (strcmp(currentCustomer.fname, searchFirstName) != 0 || strcmp(currentCustomer.idpassport, searchPassport) != 0) {
-                    // Write the customer details to the temporary file (excluding the one to be deleted)
-                    fprintf(tempFile, "%d,%s,%s,%s,%s,%s,%s,%d,%d\n",
+                    fprintf(tempFile, "%d,%s,%s,%s,%s,%s,%s,%d,%d,%s,%d,%d\n",
                         currentCustomer.age,
                         currentCustomer.idpassport,
                         currentCustomer.fname,
@@ -186,7 +179,10 @@ int main() {
                         currentCustomer.destination,
                         currentCustomer.time,
                         currentCustomer.day,
-                        currentCustomer.month
+                        currentCustomer.month,
+                        currentCustomer.returntime,
+                        currentCustomer.returnday,
+                        currentCustomer.returnmonth
                     );
                 }
             }
@@ -198,13 +194,12 @@ int main() {
             remove(csvFileName);
             rename("temp.csv", csvFileName);
 
-            printf("\n\tCustomer with first name '%s' and passport number '%s' has been deleted.\n", searchFirstName, searchPassport);
+            printf("\n\tTicket DELETED\tfirst name :%s | passport number: %s\n", searchFirstName, searchPassport);
             printf("\n\tNumber of Two-Way Tickets Remaining: %d\n", counttotalTwoWays(csvFileName));
             displayBanner();
             break;
             
         case 2:
-            //printf("\n\t\tPepeaKenya Management System.\n");
             displayBanner();
             break;         
 

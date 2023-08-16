@@ -72,7 +72,7 @@ void printReservations(Person p)
     printf("\t\t------------------------------------------------------\n");
 }  
 
-// functions to display times and destinations
+//Functions to display times and destinations
 void onewayDestinations() {
     printf("\n\t\tAvailable Destinations:\n");
     printf("\t\tDestination\tPrice\n");
@@ -109,18 +109,18 @@ void displayBorderLine(){
     printf("\t\t------------------------------------------------------\n");
 }
 
-//fucntion to calculate ticket costs
-//one-way ticket costs
+//Functions to calculate ticket costs
+
 int calculateOneWayCost(int ticketCount){
     const int PRICE_PER_ONE_WAY = 6900;
     return ticketCount * PRICE_PER_ONE_WAY;
 }
-//two-way ticket costs
+
 int calculateTwoWayCost(int twoticketCount){ 
     const int PRICE_PER_TWO_WAY = 13800;
     return twoticketCount * PRICE_PER_TWO_WAY;
 }
-//reservation costs
+
 int calculateReserveCost(int ticketCount){
     const int PRICE_PER_RESERVE = 3450;
     return ticketCount * PRICE_PER_RESERVE;
@@ -135,8 +135,7 @@ int main()
     Person onewayBookings[MAX_BOOKINGS]; // array of structs
     Twoperson twowayBookings[MAX_BOOKINGS];
     Person reserveBookings[MAX_BOOKINGS];
-    
-    int choice;
+      
     int ticketCount = 0;
     int twoticketCount = 0;
     int resticketCount = 0;
@@ -147,6 +146,7 @@ int main()
         printf("\t\t\t2. Two-Way Ticket(Return Ticket)\n");
         printf("\t\t\t3. Seat Reservation\n");
         printf("\t\t\t4. Exit\n");
+        int choice;
         printf("\t\tEnter your choice (1,2,3 or 4):\t");
         scanf("%d", &choice);
 
@@ -236,7 +236,6 @@ int main()
             }
             fclose(outfile);
             printTicket(person);
-            //onewayBookings[ticketCount] = person;
             ticketCount++;
 
             char again;
@@ -473,6 +472,7 @@ int main()
             printReservations(resperson);
             reserveBookings[resticketCount] = resperson;
             resticketCount++;
+
             //loop 3
 
             char againthree;
@@ -489,11 +489,10 @@ int main()
                 displayBorderLine();
                 return 0;
             }
-
             break; 
+
         case 4:
-            printf("\n\tYou're welcome to using PepeaKenya Ticketing system again.");            
-            //printf("\n\n\tExiting program.....\n");
+            printf("\n\tYou're welcome to using PepeaKenya Ticketing system again.");
             exit(0);    
         default:
             printf("\n\t\tPlease enter a valid choice(1, 2 or 3).\n");

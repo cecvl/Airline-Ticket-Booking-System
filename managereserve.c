@@ -28,10 +28,6 @@ void initializeCustomer(struct Customer* customer) {
     customer->month = 0;
 }
 
-void displayBanner(){
-    printf("\n\n\t\tPepeaKenya Management system.\n");
-}
-
 // Function to search for customers by first name and passport number
 int findCustomersByFirstNameAndPassport(const char* csvFileName, const char* firstName, const char* passportNumber, struct Customer* matchingCustomers) {
     int numMatches = 0;
@@ -77,16 +73,18 @@ int countTotalReservations(const char* csvFileName) {
         return totalReservations;
     }
 
-    char buffer[200];
+    char buffer[200]; 
     while (fgets(buffer, sizeof(buffer), file)) {
         totalReservations++;
-    }
+    }//check total number of lines in the file
 
     fclose(file);
-    return totalReservations - 1;
+    return totalReservations - 1; //subtract the header line
 }
 
-
+void displayBanner(){
+    printf("\n\n\t\tPepeaKenya Management system.\n");
+}
 
 int main() {
     char csvFileName[] = "reservations.csv";
@@ -108,7 +106,7 @@ int main() {
     int numMatches = findCustomersByFirstNameAndPassport(csvFileName, searchFirstName, searchPassport, matchingCustomers);
 
     if (numMatches == 0) {
-        printf("\nReservation : first name '%s' and passport number '%s' not found.\n", searchFirstName, searchPassport);
+        printf("\n\tReservation NOT FOUND\tfirst name: %s | passport number: %s\n", searchFirstName, searchPassport);
     } else {
         printf("\n\t\t------------Reservations Found(%d)------------\n", numMatches);
         for (int i = 0; i < numMatches; i++) {
@@ -121,19 +119,12 @@ int main() {
 
         int choice;
         printf("\n\t\t-------Actions Available-------\n");
-        //printf("\t\t1. Total Number of reservations\n");
         printf("\t\t1. Delete reservation\n");
         printf("\t\t2. Exit\n");
         printf("\n\t\tSelect an action(1 or 2):\t");
         scanf("%d", &choice);
 
         switch (choice) {
-        /*
-        case 1:
-            int totalReservations = countTotalReservations(csvFileName);
-            printf("\nTotal number of reservations: %d\n", totalReservations);
-            break;
-            */
         case 1:
             // Delete the customer from the CSV file
             FILE* tempFile = fopen("temp.csv", "w");
@@ -188,13 +179,12 @@ int main() {
             remove(csvFileName);
             rename("temp.csv", csvFileName);
 
-            printf("\n\tReservation with first name '%s' and passport number '%s' has been deleted.\n", searchFirstName, searchPassport);
+            printf("\n\tReservation DELETED\tfirst name: %s | passport number: %s\n", searchFirstName, searchPassport);
             printf("\n\tNumber of reservations remaining: %d\n", countTotalReservations(csvFileName));
             displayBanner();
             break;
             
         case 2:
-            //printf("\n\nPepeaKenya Management system.\n");
             displayBanner();
             break;         
 

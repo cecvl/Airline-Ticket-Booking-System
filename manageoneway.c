@@ -80,10 +80,10 @@ int counttotalOneWay(const char* csvFileName) {
     char buffer[200];
     while (fgets(buffer, sizeof(buffer), file)) {
         totalOneWay++;
-    }
+    } //check for the total number of lines in the file
 
     fclose(file);
-    return totalOneWay - 1;
+    return totalOneWay - 1; //subtract the header line
 }
 
 
@@ -108,7 +108,7 @@ int main() {
     int numMatches = findCustomersByFirstNameAndPassport(csvFileName, searchFirstName, searchPassport, matchingCustomers);
 
     if (numMatches == 0) {
-        printf("\nReservation : first name '%s' and passport number '%s' not found.\n", searchFirstName, searchPassport);
+        printf("\n\tTicket NOT FOUND: first name: %s | passport number: %s\n", searchFirstName, searchPassport);
     } else {
         printf("\n\t\t------------Tickets Found(%d)------------\n", numMatches);
         for (int i = 0; i < numMatches; i++) {
@@ -128,12 +128,6 @@ int main() {
         scanf("%d", &choice);
 
         switch (choice) {
-        /*
-        case 1:
-            int totalOneWay = counttotalOneWay(csvFileName);
-            printf("\nTotal number of one-way tickets: %d\n", totalOneWay);
-            break;
-            */
         case 1:
             // Delete the customer from the CSV file
             FILE* tempFile = fopen("temp.csv", "w");
@@ -149,7 +143,7 @@ int main() {
                 return 1;
             }
 
-            char buffer[200];
+            char buffer[200]; //create a buffer to hold the contents of the file
             while (fgets(buffer, sizeof(buffer), file)) {
                 struct Customer currentCustomer;
                 initializeCustomer(&currentCustomer);
@@ -188,7 +182,7 @@ int main() {
             remove(csvFileName);
             rename("temp.csv", csvFileName);
 
-            printf("\n\tTicket with first name '%s' and passport number '%s' has been deleted.\n", searchFirstName, searchPassport);
+            printf("\n\tTicket DELETED: first name: %s | passport number: %s\n", searchFirstName, searchPassport);
             printf("\n\tNumber of One-Way Tickets remaining: %d\n", counttotalOneWay(csvFileName));
             displayBanner();
             break;
