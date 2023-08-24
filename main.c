@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-
 #define MAX_BOOKINGS 100
 
 //handle one-way ticket & reservation
