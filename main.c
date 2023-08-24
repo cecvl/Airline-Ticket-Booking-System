@@ -29,7 +29,8 @@ typedef struct {
     char time[10];
     int day;
     int month;
-    char returntime[10];//3 additional variables for two-way ticket
+    //3 additional variables for two-way ticket
+    char returntime[10];
     int returnday;
     int returnmonth; 
         
