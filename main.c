@@ -44,7 +44,6 @@ void printTicket(Person p)
     printf("\t\tID/PASSPORT: %s\tPHONE NUMBER:   %s\n", p.idpassport, p.phone);
     printf("\t\tDESTINATION: %s\tTIME: %s\tDATE: %d/%d/2023\n", p.destination,p.time,p.day, p.month);
     printf("\t\t--------------------------------------------------------\n");
-       
 }
 
 void printTwoWayTicket(Twoperson p)
@@ -53,15 +52,15 @@ void printTwoWayTicket(Twoperson p)
     printf("\t\tID/PASSPORT: %s\tPHONE NUMBER:   %s\n", p.idpassport, p.phone);
     printf("\t\tFROM:\tNAIROBI\t\tTO:\t%s\n", p.destination);
     printf("\t\tTIME:\t%s\t\tDATE:\t%d/%d/2023\n",p.time,p.day, p.month);
-    printf("\t\t--------------------------------------------------------");
+    printf("\t\t-------------------------------------------------------");
 }
 
 void printReturn(Twoperson p)
 {
-    printf("\n\t\t----------\t-----RETURN DETAILS-----\t---------\n");
+    printf("\n\t\t----------\t-----RETURN DETAILS-----\t-------\n");
     printf("\t\tFROM: %s\t\tTO: NAIROBI\n", p.destination);
     printf("\t\tRETURN TIME: %s\tRETURN DATE: %d/%d/2023\n", p.returntime, p.returnday, p.returnmonth);
-    printf("\t\t--------------------------------------------------------\n"); 
+    printf("\t\t------------------------------------------------------\n"); 
 }
 
 void printReservations(Person p)
@@ -135,7 +134,7 @@ int main()
     Person onewayBookings[MAX_BOOKINGS]; // array of structs
     Twoperson twowayBookings[MAX_BOOKINGS];
     Person reserveBookings[MAX_BOOKINGS];
-      
+
     int ticketCount = 0;
     int twoticketCount = 0;
     int resticketCount = 0;
@@ -236,12 +235,17 @@ int main()
             }
             fclose(outfile);
             printTicket(person);
+                  
+            
+            onewayBookings[ticketCount] = person; //allows the display of all booked tickets
             ticketCount++;
+
+            //calling calculateOneWayCost function
 
             char again;
             printf("\n\tDo you want to book another one-way ticket? (y/n)\t");
             scanf("%s", &again);
-
+              
             if(again == 'N' || again == 'n'){
                 for (int i = 0; i < ticketCount; i++)
                 {
@@ -366,17 +370,18 @@ int main()
             }
             fclose(twowayfile);
             printTwoWayTicket(twowayperson);
-            twowayBookings[twoticketCount] = twowayperson;
+
+            twowayBookings[twoticketCount] = twowayperson; //allows the display of all booked tickets
             twoticketCount++;
 
-            //loop 2
+            //calling calculateTwoWayCost function
 
             char againtwo;
             printf("\n\tDo you want to book another two-way ticket? (y/n)\t");
             scanf("%s", &againtwo);
 
             if(againtwo == 'N' || againtwo == 'n'){
-                for (int i = 0; i < twoticketCount; i++) //using int i doesn't interfere with loop 1
+                for (int i = 0; i < twoticketCount; i++) //declaring int i doesn't interfere with calculationoneWayCost function
                 {
                     printf("\n\t\t-------------------TWO-WAY TICKET %d--------------------\n", i+1);
                     printTwoWayTicket(twowayBookings[i]);
@@ -470,10 +475,11 @@ int main()
              }
             fclose(rfile);
             printReservations(resperson);
-            reserveBookings[resticketCount] = resperson;
+
+            reserveBookings[resticketCount] = resperson; //allows the display of all booked tickets
             resticketCount++;
 
-            //loop 3
+            //calling calculateReserveCost function
 
             char againthree;
             printf("\n\tDo you want to make another reservation? (y/n)\t");
