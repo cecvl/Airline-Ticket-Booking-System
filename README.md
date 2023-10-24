@@ -1,16 +1,16 @@
-# POS-Airline
-a school project .
-point-of-sale(purchase) terminal for an airline(PepeaKenya).
-The system is designed for purchase of tickets & making reservations 
-in the Local Flights Section at JKIA in Nairobi.
+## Airline-Ticket-Booking-System
+The Airline Ticket Booking System is a point-of-sale terminal designed to handle user bookings and reservations for flights.  
+The system supports both self-service and teller-assisted booking.  
+The user generates booking records that are stored in CSV files.  
+
+## Structure
+Uses CLI interface.  
+main.c : take bookings or reservations  
+manageoneway.c : search,delete records in onewaybooking.csv  
+managetwoway.c : search,delete records in twowaybooking.csv  
+managereserve.c : search,delete records in reservations.csv
 
 
-# system design
-Has 4 modules: main.c , managereserve.c , manageoneway.c , managetwoway.c.  Has a customer data storage system that utilizes .csv files(excel format).
 
-
-# user interfaces:
-Customer interface: Book one-way or two-way tickets. Make reservation requests.
-Flight management interface: Search customer details. Cancel bookings and reservations. 
 
 
